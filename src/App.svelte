@@ -16,10 +16,15 @@
 </script>
 
 <nav>
-  <a class="item" class:active={$location === '/'} href="/" alt="home">home</a>
-  <a class="item" class:active={$location.match(/^\/archive/)} href="#/archive" >
+  <a
+    class="item"
+    class:active={!$location.match(/^\/(archive|about)/)}
+    href="/"
+    alt="home">home</a
+  >
+  <a class="item" class:active={$location.match(/^\/archive/)} href="#/archive">
     archive
-    </a >
+  </a>
   <a
     class="item about"
     class:active={$location.match(/^\/about/)}
@@ -50,6 +55,6 @@
     margin-left: auto;
   }
   section {
-      margin: 0 1em;
-    }
+    margin: 0 1em;
+  }
 </style>
