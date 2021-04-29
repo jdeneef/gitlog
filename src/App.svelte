@@ -10,7 +10,6 @@
     '/': ShowLog,
     '/about': About,
     '/:dir': ShowLog,
-    '/archive/:dir': ShowLog,
     '*': NotFound,
   }
 </script>
@@ -22,9 +21,6 @@
     href="/"
     alt="home">home</a
   >
-  <a class="item" class:active={$location.match(/^\/archive/)} href="#/archive">
-    archive
-  </a>
   <a
     class="item about"
     class:active={$location.match(/^\/about/)}

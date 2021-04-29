@@ -19,15 +19,8 @@
     size?: number
   }
 
-  const inArchive = $location.match(/^\/archive/)
-
-  const url = [
-    'https://de-neef.net/gitlog/gitlogs',
-    inArchive && 'archive',
-    params.dir !== 'archive' && params.dir,
-  ]
-    .filter(d => d)
-    .join('/')
+  const url =
+    'https://de-neef.net/gitlog/gitlogs/' + (params.dir ? params.dir : '')
 
   const getFiles: Promise<nginxJson[]> = fetch(url).then(r => r.json())
   const name = $location === '/' ? 'overview' : params.dir
@@ -40,8 +33,8 @@
     {#if files.find(d => d.type === 'directory' && d.name !== 'archive')}
       Projects:
       <div class="projects">
-        {#each files.filter(d => d.type === 'directory' && d.name !== 'archive') as item}
-          <a class="dir" href="#/{inArchive ? 'archive/' : ''}{item.name}">
+        {#each files.filter(d => d.type === 'directory') as item}
+          <a class="dir" href="#/{item.name}">
             {item.name}
           </a>
         {/each}
@@ -89,10 +82,15 @@
     flex-wrap: wrap;
   }
   .dir {
-    padding: 0.5em;
-    margin: 0.5em;
+    padding: 0.25em 0.5em;
+    margin: 0.25em 0.5em;
     text-decoration: none;
+    box-shadow: 2px 2px 2px rgb(52, 59, 72);
+    background-color: rgb(92, 99, 112);
   }
+  .dir:active {
+    box-shadow: none;
+    }
   .gitcal {
     order: 2;
     margin: 1em 0;
