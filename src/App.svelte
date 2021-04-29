@@ -18,7 +18,7 @@
   <a
     class="item"
     class:active={!$location.match(/^\/(archive|about)/)}
-    href="/"
+    href="/gitlog"
     alt="home">home</a
   >
   <a
