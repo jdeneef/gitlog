@@ -1,7 +1,6 @@
 #!/bin/sh
 # gitlog's update_gitlog script, run from cron daily
-
-set -x
+# set -x
 
 BD=/srv/gitlogs
 AFTER=${1:-"yesterday 0:00"}
@@ -14,12 +13,12 @@ do
   LOG=$(git --git-dir $i log --all --after="$AFTER" --before="$BEFORE" --pretty=format:%ad --date=short)
   if [ -n "$LOG" ]; then
     [ -z "$LOGALL" ] && LOGALL="$LOG" || LOGALL="$LOGALL\n$LOG"
-    GD=${i%.git}
-    FO=$BD/$GD
+    GD="${i%.git}"
+    FO="$BD/$GD"
     mkdir -p "$FO"
-    rm -f $FO/* # cleanup old files
+    find "$FO" -type f -not -name "git.log" -delete
     echo -e "$LOG" | sort | uniq -c >> "$FO/git.log"
-    for readme in `git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$'`
+    for readme in $(git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$')
     do
       git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
     done
@@ -34,7 +33,8 @@ fi
 for i in $BD/*
 do
   if [ -d $i ]; then
-    [ ! -d $HOME/$i.git ] && rm -rf $i
+    GD="$(basename $i)"
+    [ ! -d $HOME/$GD.git ] && rm -rf $i
   fi
 done
 
