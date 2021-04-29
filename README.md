@@ -3,19 +3,17 @@
 Gitlog is a svelte app frontend only I use to share my git commit calendars in github format.
 Gitlog requires a script running from cron updating the git project logs, and an nginx webserver to serve this app and to serve the gitlog files in json format
 
-example: https://de-neef.net/gitlog
+example: <https://de-neef.net/gitlog>
 
-## Get started
+## Installation
 
 ### Prepare git-server
 
-install this script on your git-server. I use git-shell, so should be installed in ``git-shell-commands dir``
+install this script on your git-server. I use git-shell, so should be installed in ``git-shell-commands`` dir
 
 ```sh
 ~ # cat ~git/git-shell-commands/update_gitlogs
 #!/bin/sh
-set -x
-
 BD=/srv/gitlogs
 AFTER=${1:-"yesterday 0:00"}
 BEFORE=${2:-"today 0:00"}
@@ -31,8 +29,10 @@ do
                 FO=$BD/$GD
                 mkdir -p "$FO"
                 echo -e "$LOG" | sort | uniq -c >> "$FO/git.log"
-                readme=`git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$'`
-                [ -n "$readme" ] && git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
+                for readme in `git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$'`
+                do
+                        git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
+                done
         fi
 done
 
@@ -44,13 +44,13 @@ exit 0
 ```
 
 And add cronjob:
+
 ```sh
 3       0       *       *       *       update_gitlogs >> /tmp/gitlog.output 2>&1
 ```
 
 ### Prepare nginx webserver for serving app and git logs
 Add this config to your nginx webserver:
-
 
 ```nginx
         location /gitlog {
