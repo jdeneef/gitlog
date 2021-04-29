@@ -20,8 +20,8 @@
   }
 
   const url =
-    /* 'https://de-neef.net/gitlog/gitlogs/' + (params.dir ? params.dir : '') */
-    'gitlogs/' + (params.dir ? params.dir +'/' : '')
+    /* 'https://de-neef.net/gitlog/gitlogs/' + (params.dir ? params.dir + '/' : '') */
+    'gitlogs/' + (params.dir ? params.dir + '/' : '')
 
   const getFiles: Promise<nginxJson[]> = fetch(url).then(r => r.json())
   const name = $location === '/' ? 'overview' : params.dir
@@ -43,7 +43,7 @@
     {/if}
     {#each files.filter(d => d.type === 'file' && d.name === 'git.log') as item}
       <div class="gitcal">
-        Git activities: {name}<br />
+        Git activities: {item.name}<br />
         {#await fetch(url + '/git.log').then(r => r.text())}
           Loading ...
         {:then data}
@@ -91,7 +91,7 @@
   }
   .dir:active {
     box-shadow: none;
-    }
+  }
   .gitcal {
     order: 2;
     margin: 1em 0;

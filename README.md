@@ -12,8 +12,11 @@ example: <https://de-neef.net/gitlog>
 install this script on your git-server. I use git-shell, so should be installed in ``git-shell-commands`` dir
 
 ```sh
-~ # cat ~git/git-shell-commands/update_gitlogs
 #!/bin/sh
+# gitlog's update_gitlog script, run from cron daily
+
+set -x
+
 BD=/srv/gitlogs
 AFTER=${1:-"yesterday 0:00"}
 BEFORE=${2:-"today 0:00"}
@@ -22,23 +25,32 @@ LOGALL=
 umask 022
 for i in *.git
 do
-        LOG=$(git --git-dir $i log --all --after="$AFTER" --before="$BEFORE" --pretty=format:%ad --date=short)
-        if [ -n "$LOG" ]; then
-                [ -z "$LOGALL" ] && LOGALL="$LOG" || LOGALL="$LOGALL\n$LOG"
-                GD=${i%.git}
-                FO=$BD/$GD
-                mkdir -p "$FO"
-                echo -e "$LOG" | sort | uniq -c >> "$FO/git.log"
-                for readme in `git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$'`
-                do
-                        git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
-                done
-        fi
+  LOG=$(git --git-dir $i log --all --after="$AFTER" --before="$BEFORE" --pretty=format:%ad --date=short)
+  if [ -n "$LOG" ]; then
+    [ -z "$LOGALL" ] && LOGALL="$LOG" || LOGALL="$LOGALL\n$LOG"
+    GD=${i%.git}
+    FO=$BD/$GD
+    mkdir -p "$FO"
+    rm -f $FO/* # cleanup old files
+    echo -e "$LOG" | sort | uniq -c >> "$FO/git.log"
+    for readme in `git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$'`
+    do
+      git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
+    done
+  fi
 done
 
 if [ -n "$LOGALL" ]; then
-        echo -e "$LOGALL" | sort | uniq -c >> $BD/git.log
+  echo -e "$LOGALL" | sort | uniq -c >> $BD/git.log
 fi
+
+# cleanup old gitlogs
+for i in $BD/*
+do
+  if [ -d $i ]; then
+    [ ! -d $HOME/$i.git ] && rm -rf $i
+  fi
+done
 
 exit 0
 ```
@@ -57,7 +69,7 @@ Add this config to your nginx webserver:
                 alias /var/www/localhost/gitlog/;
                 try_files $uri $uri/ =404;
                 location /gitlog/gitlogs {
-                        add_header Access-Control-Allow-Origin *;
+                        # add_header Access-Control-Allow-Origin *;
                         alias /srv/gitlogs/;
                         autoindex on;
                         autoindex_format json;

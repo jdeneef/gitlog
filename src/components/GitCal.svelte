@@ -1,11 +1,11 @@
 <script lang="ts">
   // generate gitlogfile:
-  // $> git log --date=short --pretty=format:%ad | sort | uniq -c > gitlog.log
+  // $> git log --date=short --pretty=format:%ad | sort | uniq -c > git.log
   export let gitlog: string
   export let styles = {}
   export let months = '6'
 
-  const lstyles = {
+  const _styles = {
     commits0: 'rgb(22,27,34)',
     commits1: 'rgb(14,68,41)',
     commits2: 'rgb(38, 166, 65)',
@@ -75,7 +75,7 @@
       {#each days as day, index}
         {#if day.date.getDate() === 1}
           <text
-            use:setStyles={{ fill: lstyles.text }}
+            use:setStyles={{ fill: _styles.text }}
             class="month"
             x={((index / 7) | 0) * 12}
             y="10"
@@ -87,7 +87,7 @@
           </text>
         {/if}
         <rect
-          fill={lstyles[commits(day.commits)]}
+          fill={_styles[commits(day.commits)]}
           width="10"
           height="10"
           x={((index / 7) | 0) * 12}
