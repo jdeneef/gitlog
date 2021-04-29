@@ -88,7 +88,7 @@ lxc file push build.tar <lxc> /root/build.tar
 lxc exec <lxc> sh
 cd /var/www/localhost
 tar xvf /root/build.tar 
-mv build gitlog
+mv public gitlog
 chown -R root.www-data gitlog
 chmod -R u+rwX,g+rX gitlog
 ```
