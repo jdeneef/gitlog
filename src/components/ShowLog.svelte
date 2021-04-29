@@ -26,25 +26,31 @@
     inArchive && 'archive',
     params.dir !== 'archive' && params.dir,
   ]
-    .filter((d) => d)
+    .filter(d => d)
     .join('/')
 
-  const getFiles: Promise<nginxJson[]> = fetch(url).then((r) => r.json())
+  const getFiles: Promise<nginxJson[]> = fetch(url).then(r => r.json())
   const name = $location === '/' ? 'overview' : params.dir
 </script>
 
 <h1>Git Logs - {name}</h1>
 
-{#await getFiles then files}
-  {#each files as item}
-    {#if item.type === 'directory' && item.name !== 'archive'}
-      <a class="dir" href="#/{inArchive ? 'archive/' : ''}{item.name}">
-        {item.name}
-      </a>
-    {:else if item.type === 'file' && item.name === 'git.log'}
+<div class="wrapper">
+  {#await getFiles then files}
+    {#if files.find(d => d.type === 'directory' && d.name !== 'archive')}
+      Projects:
+      <div class="projects">
+        {#each files.filter(d => d.type === 'directory' && d.name !== 'archive') as item}
+          <a class="dir" href="#/{inArchive ? 'archive/' : ''}{item.name}">
+            {item.name}
+          </a>
+        {/each}
+      </div>
+    {/if}
+    {#each files.filter(d => d.type === 'file' && d.name === 'git.log') as item}
       <div class="gitcal">
-        Git activities: {name}<br>
-        {#await fetch(url + '/git.log').then((r) => r.text())}
+        Git activities: {name}<br />
+        {#await fetch(url + '/git.log').then(r => r.text())}
           Loading ...
         {:then data}
           <GitCal
@@ -54,39 +60,51 @@
           />
         {/await}
       </div>
-    {:else if item.type === 'file' && item.name.match(/\.(md|txt)/i)}
+    {/each}
+    {#each files.filter(d => d.type === 'file' && d.name.match(/\.(md|txt)/i)) as item}
       <div class="readme">
-        {#await fetch(url + '/' + item.name).then((r) => r.text())}
+        {#await fetch(url + '/' + item.name).then(r => r.text())}
           Loading ...
         {:then data}
           {@html marked(data)}
         {/await}
       </div>
-    {/if}
-  {/each}
-{:catch error}
-  <div class="error">
-    {error.message}
-  </div>
-{/await}
+    {/each}
+  {:catch error}
+    <div class="error">
+      {error.message}
+    </div>
+  {/await}
+</div>
 
 <style>
-  .dir:first-of-type::before {
-    content: 'Projects: ';
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .projects {
+    order: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   .dir {
+    padding: 0.5em;
+    margin: 0.5em;
     text-decoration: none;
   }
   .gitcal {
+    order: 2;
     margin: 1em 0;
     padding: 0.5em;
     background: rgb(92, 99, 112);
-    box-shadow: 5px 5px 5px rgb(52,59,72);
+    box-shadow: 5px 5px 5px rgb(52, 59, 72);
     overflow: hidden;
   }
   .readme {
+    order: 3;
     padding: 0.5em;
-    box-shadow: 5px 5px 5px rgb(52,59,72);
+    box-shadow: 5px 5px 5px rgb(52, 59, 72);
     background: #fefefe;
     color: rgb(72, 79, 92);
   }
