@@ -108,9 +108,6 @@
 {/if}
 
 <style>
-  section {
-    margin: 0 1em;
-  }
   .month {
     font-size: xx-small;
   }
