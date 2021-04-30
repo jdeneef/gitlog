@@ -19,9 +19,9 @@
     size?: number
   }
 
-  const url =
-    'https://de-neef.net/gitlog/gitlogs/' + (params.dir ? params.dir + '/' : '')
-    /* 'gitlogs/' + (params.dir ? params.dir + '/' : '') */
+  const baseURL = 'process.env.baseURL'
+
+  const url = baseURL + (params.dir ? params.dir + '/' : '')
 
   const getFiles: Promise<nginxJson[]> = fetch(url).then(r => r.json())
   const name = $location === '/' ? 'overview' : params.dir

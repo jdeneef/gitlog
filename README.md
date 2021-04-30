@@ -9,7 +9,7 @@ example: <https://de-neef.net/gitlog>
 
 ### Prepare git-server
 
-install this script on your git-server. I use git-shell, so should be installed in ``git-shell-commands`` dir
+Install this script on your git-server. I use git-shell, so should be installed in ``git-shell-commands`` directory
 
 ```sh
 #!/bin/sh
@@ -55,7 +55,7 @@ done
 exit 0
 ```
 
-And add cronjob:
+And add cron job:
 
 ```sh
 3       0       *       *       *       update_gitlogs >> /tmp/gitlog.output 2>&1

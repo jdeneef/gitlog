@@ -43,6 +43,10 @@ export default {
       preprocess: sveltePreprocess({
         sourceMap: !production,
         replace: [
+          ['process.env.NODE_ENV', JSON.stringify(process.env.NODE_ENV)],
+          ['process.env.baseURL', process.env.NODE_ENV === 'production'
+            ? 'gitlogs/'
+            : 'https://de-neef.net/gitlog/gitlogs/'],
           ['process.env.npm_package_name', JSON.stringify(process.env.npm_package_name)],
           ['process.env.npm_package_version', JSON.stringify(process.env.npm_package_version)]
         ]
