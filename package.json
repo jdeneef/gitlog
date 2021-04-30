@@ -1,8 +1,9 @@
 {
   "name": "gitlog",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "private": true,
   "scripts": {
+    "prebuild": "rm -rf public/build/*",
     "build": "NODE_ENV='production' rollup -c",
     "dev": "NODE_ENV='development' rollup -c -w",
     "start": "sirv public --no-clear",
@@ -20,7 +21,7 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0",
+    "svelte": "^3.38.0",
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
