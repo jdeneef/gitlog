@@ -1,6 +1,6 @@
 # Git Log app
 
-Gitlog is a svelte app frontend only I use to share my git commit calendars in github format.
+Gitlog is a svelte frontend only app I use to share my git commit calendars in github format.
 Gitlog requires a script running from cron updating the git project logs, and an nginx webserver to serve this app and to serve the gitlog files in json format
 
 example: <https://de-neef.net/gitlog>

@@ -33,6 +33,7 @@
 
   // calculate start and stop date
   const calEnd = new Date()
+  calEnd.setDate(calEnd.getDate()-1)
   const calStart = new Date(
     calEnd.getFullYear(),
     calEnd.getMonth() - Number(months),
