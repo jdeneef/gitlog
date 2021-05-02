@@ -21,8 +21,8 @@
 
   const _gitlog = gitlog
     .split('\n')
-    .map((d) => d.match(/\s+(\d+)\s+(\d{4}-\d{2}-\d{2})/))
-    .filter((d) => d)
+    .map(d => d.match(/\s+(\d+)\s+(\d{4}-\d{2}-\d{2})/))
+    .filter(d => d)
     .reduce((a, c) => ((a[c[2]] = Number(c[1])), a), {})
 
   const setStyles = (node: HTMLElement | SVGElement, styles: object) => {
@@ -33,7 +33,7 @@
 
   // calculate start and stop date
   const calEnd = new Date()
-  calEnd.setDate(calEnd.getDate()-1)
+  calEnd.setDate(calEnd.getDate() - 1)
   const calStart = new Date(
     calEnd.getFullYear(),
     calEnd.getMonth() - Number(months),
@@ -71,13 +71,13 @@
 {:else if error}
   {error}
 {:else}
-  <svg width={((days.length / 7) | (0 + 1)) * 12} height="97">
+  <svg width={((days.length / 7) | 0) * 12 + 8} height={7 * 12 + 2 * 14}>
     <g>
       {#each days as day, index}
         {#if day.date.getDate() === 1}
           <text
             use:setStyles={{ fill: _styles.text }}
-            class="month"
+            class="text"
             x={((index / 7) | 0) * 12}
             y="10"
           >
@@ -104,12 +104,35 @@
           >
         </rect>
       {/each}
+      {#each ['none', 'some', 'more', 'a lot'] as text, index}
+        {index}
+        <rect
+          fill={_styles['commits' + index]}
+          width="10"
+          height="10"
+          x={index * 45}
+          y={14 + 7 * 12 + 2}
+          rx="2"
+          ry="2"
+        >
+          <title>{text}</title>
+        </rect>
+        <text
+          use:setStyles={{ fill: _styles.text }}
+          class="text"
+          x={index * 45 + 12 + 2}
+          y={14 + 7 * 12 + 10}
+        >
+          {text}
+        </text>
+      {/each}
+      >
     </g>
   </svg>
 {/if}
 
 <style>
-  .month {
+  .text {
     font-size: xx-small;
   }
 </style>

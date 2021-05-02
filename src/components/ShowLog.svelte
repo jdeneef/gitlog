@@ -98,7 +98,6 @@
     padding: 0.5em;
     background: rgb(92, 99, 112);
     box-shadow: 5px 5px 5px rgb(52, 59, 72);
-    overflow: hidden;
   }
   .readme {
     order: 3;
