@@ -53,9 +53,10 @@
             months="12"
             styles={{
               commits0: '#6B7280',
-              commits1: '#9CA3AF',
-              commits2: '#D1D5DB',
-              commits3: '#F9FAFB',
+              commits1: '#9FA4AE',
+              commits2: '#BFC2C9',
+              commits3: '#EAEBED',
+              commits4: '#FFFFFF',
               'text-fill': '#F9FAFB'
             }}
           />
