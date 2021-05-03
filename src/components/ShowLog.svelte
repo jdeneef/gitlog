@@ -56,7 +56,7 @@
               commits1: '#9CA3AF',
               commits2: '#D1D5DB',
               commits3: '#F9FAFB',
-              text: '#F9FAFB'
+              'text-fill': '#F9FAFB'
             }}
           />
         {/await}
