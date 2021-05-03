@@ -2,7 +2,8 @@
   export let params: { dir?: string } = {}
   import { location } from 'svelte-spa-router'
   import marked from 'marked'
-  import GitCal from '../components/GitCal.svelte'
+  import GitCal from 'svelte-gitcal'
+  /* import 'svelte-gitcal/dist/index.css' */
 
   marked.setOptions({
     mangle: true,
@@ -50,7 +51,13 @@
           <GitCal
             gitlog={data}
             months="12"
-            styles={{ commits0: 'rgb(65,72,89)' }}
+            styles={{
+              commits0: '#6B7280',
+              commits1: '#9CA3AF',
+              commits2: '#D1D5DB',
+              commits3: '#F9FAFB',
+              text: '#F9FAFB'
+            }}
           />
         {/await}
       </div>
