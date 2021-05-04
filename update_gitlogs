@@ -18,9 +18,10 @@ do
     mkdir -p "$FO"
     find "$FO" -type f -not -name "git.log" -delete
     echo -e "$LOG" | sort | uniq -c >> "$FO/git.log"
-    for readme in $(git --git-dir $i ls-tree -r master --name-only | grep -Ei '^(install|readme)\.(txt|md)$')
+    CURBR=$(git --git-dir $i branch --show-current)
+    for readme in $(git --git-dir $i ls-tree -r "$CURBR" --name-only | grep -Ei '^(install|readme)\.(txt|md)$')
     do
-      git --git-dir $i archive master $readme | tar -xO >> "$FO/$readme"
+      git --git-dir $i archive "$CURBR" "$readme" | tar -xO >> "$FO/$readme"
     done
   fi
 done
