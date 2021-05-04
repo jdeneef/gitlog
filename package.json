@@ -1,6 +1,6 @@
 {
   "name": "gitlog",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "scripts": {
     "prebuild": "rm -rf public/build/*",
@@ -10,27 +10,27 @@
     "validate": "svelte-check"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-commonjs": "^18.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^1.0.0",
     "@types/marked": "^2.0.2",
     "marked": "^2.0.3",
-    "rollup": "^2.46.0",
+    "rollup": "^2.47.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.38.0",
+    "svelte": "^3.38.2",
     "svelte-check": "^1.0.0",
-    "svelte-preprocess": "^4.0.0",
+    "svelte-gitcal": "^2.1.6",
+    "svelte-preprocess": "^4.7.3",
     "svelte-spa-router": "^3.1.0",
     "tslib": "^2.0.0",
     "typescript": "^4.0.0"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0",
-    "svelte-gitcal": "file:../svelte-gitcal"
+    "sirv-cli": "^1.0.0"
   },
   "prettier": {
     "trailingComma": "es5",

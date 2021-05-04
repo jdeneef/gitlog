@@ -15,7 +15,9 @@
     info: name={packageName} version={packageVersion} running in {node_env}
 
   <p>
-  Built with <a rel=external href='https://svelte.dev'>Svelte</a>
+  Built with <a rel=external href='https://svelte.dev'>Svelte</a> 
+  and my own <a rel=external href="https://www.npmjs.com/package/svelte-gitcal">svelte-gitcal</a> 
+  pulling gitlog info from nginx hosted directory (<code>autoindex true</code> and <code>autoindex_format json</code>)
   </p>
 
 
