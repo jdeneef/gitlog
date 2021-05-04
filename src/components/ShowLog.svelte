@@ -43,23 +43,25 @@
       </div>
     {/if}
     {#each files.filter(d => d.type === 'file' && d.name === 'git.log') as item}
-      <div class="gitcal">
-        Git activities: {item.name}<br />
+      <div class="cal">
+        Git activities: {item.name}
         {#await fetch(url + '/git.log').then(r => r.text())}
           Loading ...
         {:then data}
-          <GitCal
-            gitlog={data}
-            months="12"
-            styles={{
-              commits0: '#6B7280',
-              commits1: '#9FA4AE',
-              commits2: '#BFC2C9',
-              commits3: '#EAEBED',
-              commits4: '#FFFFFF',
-              'text-fill': '#F9FAFB'
-            }}
-          />
+          <div class="gitcal">
+            <GitCal
+              gitlog={data}
+              months="12"
+              styles={{
+                commits0: '#6B7280',
+                commits1: '#9FA4AE',
+                commits2: '#BFC2C9',
+                commits3: '#EAEBED',
+                commits4: '#FFFFFF',
+                'text-fill': '#F9FAFB',
+              }}
+            />
+          </div>
         {/await}
       </div>
     {/each}
@@ -100,12 +102,17 @@
   .dir:active {
     box-shadow: none;
   }
-  .gitcal {
+  .cal {
     order: 2;
     margin: 1em 0;
     padding: 0.5em;
     background: rgb(92, 99, 112);
     box-shadow: 5px 5px 5px rgb(52, 59, 72);
+    display: flex;
+    flex-direction: column;
+  }
+  .gitcal {
+    overflow: auto;
   }
   .readme {
     order: 3;
