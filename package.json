@@ -1,16 +1,16 @@
 {
   "name": "gitlog",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "private": true,
   "scripts": {
     "prebuild": "rm -rf public/build/*",
-    "build": "NODE_ENV='production' rollup -c",
-    "dev": "NODE_ENV='development' rollup -c -w",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "validate": "svelte-check"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.1.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^1.0.0",

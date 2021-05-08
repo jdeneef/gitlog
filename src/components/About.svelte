@@ -2,7 +2,7 @@
   // replaced by preprocessor
   const packageVersion = process.env.npm_package_version
   const packageName = process.env.npm_package_name
-  const node_env = process.env.NODE_ENV
+  const production = process.env.PRODUCTION
 </script>
 
 <svelte:head>
@@ -12,7 +12,7 @@
 <main>
   <h1>About this app</h1>
 
-  info: name={packageName} version={packageVersion} running in {node_env}
+  info: name={packageName} version={packageVersion} running in {production ? "prod" : "dev"}
 
   <p>
     Built with <a rel="external" href="https://svelte.dev">Svelte</a>

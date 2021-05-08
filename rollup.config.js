@@ -33,7 +33,7 @@ function serve() {
 export default {
   input: 'src/main.ts',
   output: {
-    sourcemap: process.env.NODE_ENV !== 'production',
+    sourcemap: !production,
     format: 'iife',
     name: 'app',
     file: 'public/build/bundle.js'
@@ -43,8 +43,8 @@ export default {
       preprocess: sveltePreprocess({
         sourceMap: !production,
         replace: [
-          ['process.env.NODE_ENV', JSON.stringify(process.env.NODE_ENV)],
-          ['process.env.baseURL', process.env.NODE_ENV === 'production'
+          ['process.env.PRODUCTION', JSON.stringify(production)],
+          ['process.env.baseURL', production
             ? 'gitlogs/'
             : 'https://de-neef.net/gitlog/gitlogs/'],
           ['process.env.npm_package_name', JSON.stringify(process.env.npm_package_name)],
