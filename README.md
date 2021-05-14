@@ -105,6 +105,11 @@ chown -R root.www-data gitlog
 chmod -R u+rwX,g+rX gitlog
 ```
 
+or in 1 go:
+```
+tar cvf - public | ssh idefix "lxc exec bellefleur -- sh -c 'cat > /var/www/localhost/public.tar; cd /var/www/localhost; tar xvf public.tar; chown -R root.www-data public; chmod -R u+rwX,g+rX-w,o-rwx public; rm -rf gitlog; mv public gitlog; rm public.tar'"
+```
+
 ---
 That should be it.
 ---
