@@ -94,10 +94,10 @@ Build and cp app to remote host
 ```sh
 npm run build
 # copy to remote host, I use linux containers (lxd)
-tar cvf - public | ssh <remotehost> "cat > build.tar"
-ssh <remotehost>
-lxc file push build.tar <lxc> /root/build.tar
-lxc exec <lxc> sh
+tar cvf - public | ssh $SSH_REMOTE "cat > build.tar"
+ssh $SSH_REMOTE
+lxc file push build.tar $LXC_REMOTE /root/build.tar
+lxc exec $LXC_REMOTE sh
 cd /var/www/localhost
 tar xvf /root/build.tar 
 mv public gitlog
@@ -107,7 +107,7 @@ chmod -R u+rwX,g+rX gitlog
 
 or in 1 go:
 ```
-tar cvf - public | ssh idefix "lxc exec bellefleur -- sh -c 'cat > /var/www/localhost/public.tar; cd /var/www/localhost; tar xvf public.tar; chown -R root.www-data public; chmod -R u+rwX,g+rX-w,o-rwx public; rm -rf gitlog; mv public gitlog; rm public.tar'"
+read -p "cp to $LXC_REMOTE via $SSH_REMOTE, continue? " -r -n 1 -t 5; [[ $REPLY =~ ^[Yy]$ ]] && tar cvf - public | ssh $SSH_REMOTE "lxc exec $LXC_REMOTE -- sh -c 'cat > /var/www/localhost/public.tar; cd /var/www/localhost; tar xvf public.tar; chown -R root.www-data public; chmod -R u+rwX,g+rX-w,o-rwx public; rm -rf gitlog; mv public gitlog; rm public.tar'"
 ```
 
 ---
