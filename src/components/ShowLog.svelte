@@ -121,4 +121,7 @@
     background: #fefefe;
     color: rgb(72, 79, 92);
   }
+  :global(pre) {
+    white-space: pre-wrap;
+  }
 </style>
