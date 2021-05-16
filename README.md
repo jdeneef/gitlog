@@ -107,7 +107,7 @@ chmod -R u+rwX,g+rX gitlog
 
 or in 1 go:
 ```
-read -p "cp to $LXC_REMOTE via $SSH_REMOTE, continue? " -r -n 1 -t 5; [[ $REPLY =~ ^[Yy]$ ]] && tar cvf - public | ssh $SSH_REMOTE "lxc exec $LXC_REMOTE -- sh -c 'cat > /var/www/localhost/public.tar; cd /var/www/localhost; tar xvf public.tar; chown -R root.www-data public; chmod -R u+rwX,g+rX-w,o-rwx public; rm -rf gitlog; mv public gitlog; rm public.tar'"
+read -p "cp to $LXC_REMOTE via $SSH_REMOTE, continue? " -r -n 1 -t 5; [[ $REPLY =~ ^[Yy]$ ]] && npm run build && tar cvf - public | ssh $SSH_REMOTE "lxc exec $LXC_REMOTE -- sh -c 'cat > /var/www/localhost/public.tar; cd /var/www/localhost; tar xvf public.tar; chown -R root.www-data public; chmod -R u+rwX,g+rX-w,o-rwx public; rm -rf gitlog; mv public gitlog; rm public.tar'"
 ```
 
 ---
